@@ -1,15 +1,40 @@
 # Sistema de Chamados - Alves Tech
+
 ## 📸 Preview do sistema
 
 ![Preview do sistema](./src/assets/preview.png)
 
 Sistema simples de abertura e gerenciamento de chamados, desenvolvido em React para simular rotinas de atendimento e suporte técnico.
 
+---
+
+## 🎓 Contexto do projeto
+
+Este projeto foi desenvolvido como trabalho final do curso de **Programação Frontend com React e JavaScript**, realizado pelo Instituto Federal de Santa Catarina (IFSC), com carga horária de 60 horas.
+
+Durante o curso, foram abordados conceitos como:
+
+- Criação de aplicações com React
+- Manipulação de estado e componentes
+- Estruturação de interfaces
+- Lógica de aplicação
+- Boas práticas de desenvolvimento frontend
+
+O sistema foi desenvolvido com o objetivo de aplicar, na prática, os conhecimentos adquiridos ao longo da formação.
+
+---
+
 ## 📌 Sobre o projeto
 
-Este projeto foi criado com o objetivo de representar um fluxo básico de atendimento, permitindo registrar, acompanhar e gerenciar chamados de forma organizada.
+Este sistema representa um fluxo básico de atendimento, permitindo:
 
-A aplicação simula situações reais da área de suporte, como abertura de chamados, acompanhamento de status e resolução de atendimentos.
+- Registrar chamados
+- Acompanhar o status dos atendimentos
+- Gerenciar chamados pendentes e resolvidos
+
+A aplicação simula uma situação real da área de suporte técnico, onde é necessário organizar demandas e acompanhar o ciclo de atendimento.
+
+---
 
 ## 🚀 Tecnologias utilizadas
 
@@ -18,6 +43,8 @@ A aplicação simula situações reais da área de suporte, como abertura de cha
 - Vite
 - HTML
 - CSS
+
+---
 
 ## ⚙️ Funcionalidades
 
@@ -29,6 +56,8 @@ A aplicação simula situações reais da área de suporte, como abertura de cha
 - Exibição de data e hora do atendimento
 - Interface organizada e intuitiva
 
+---
+
 ## 🧠 Aprendizados
 
 Com este projeto, pratiquei:
@@ -39,17 +68,35 @@ Com este projeto, pratiquei:
 - Organização de interface para sistemas reais
 - Simulação de rotinas de suporte técnico
 
+---
+
 ## ▶️ Como executar o projeto
 
 ```bash
-# Clonar o repositório
 git clone https://github.com/regesalves/sistema-de-chamados-react.git
-
-# Acessar a pasta
 cd sistema-de-chamados-react
-
-# Instalar dependências
 npm install
-
-# Rodar o projeto
 npm run dev
+```
+
+A aplicação estará disponível em:
+http://localhost:5173/
+
+---
+
+## 🔧 Melhorias futuras
+
+- Validação de campos obrigatórios
+- Persistência de dados com localStorage
+- Filtro e busca de chamados
+- Melhorias de responsividade
+- Integração com backend
+
+---
+
+## 👨‍💻 Autor
+
+Desenvolvido por Réges Alves  
+Profissional em transição para a área de tecnologia, com experiência em suporte técnico e desenvolvimento de aplicações.
+
+🔗 LinkedIn: https://linkedin.com/in/regesalves
