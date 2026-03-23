@@ -55,6 +55,7 @@ A aplicação simula uma situação real da área de suporte técnico, onde é n
 - Exclusão de chamados
 - Exibição de data e hora do atendimento
 - Interface organizada e intuitiva
+- Persistência de dados com localStorage, mantendo os chamados mesmo após atualização da página
 
 ---
 
@@ -87,7 +88,6 @@ http://localhost:5173/
 ## 🔧 Melhorias futuras
 
 - Validação de campos obrigatórios
-- Persistência de dados com localStorage
 - Filtro e busca de chamados
 - Melhorias de responsividade
 - Integração com backend
