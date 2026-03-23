@@ -1,4 +1,7 @@
 # Sistema de Chamados - Alves Tech
+## 📸 Preview do sistema
+
+![Preview do sistema](./src/assets/preview.png)
 
 Sistema simples de abertura e gerenciamento de chamados, desenvolvido em React para simular rotinas de atendimento e suporte técnico.
 
