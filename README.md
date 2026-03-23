@@ -1,16 +1,52 @@
-# React + Vite
+# Sistema de Chamados - Alves Tech
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sistema simples de abertura e gerenciamento de chamados, desenvolvido em React para simular rotinas de atendimento e suporte técnico.
 
-Currently, two official plugins are available:
+## 📌 Sobre o projeto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Este projeto foi criado com o objetivo de representar um fluxo básico de atendimento, permitindo registrar, acompanhar e gerenciar chamados de forma organizada.
 
-## React Compiler
+A aplicação simula situações reais da área de suporte, como abertura de chamados, acompanhamento de status e resolução de atendimentos.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Tecnologias utilizadas
 
-## Expanding the ESLint configuration
+- React
+- JavaScript
+- Vite
+- HTML
+- CSS
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## ⚙️ Funcionalidades
+
+- Cadastro de novos chamados
+- Listagem de chamados pendentes
+- Marcar chamado como concluído
+- Reabrir chamados finalizados
+- Exclusão de chamados
+- Exibição de data e hora do atendimento
+- Interface organizada e intuitiva
+
+## 🧠 Aprendizados
+
+Com este projeto, pratiquei:
+
+- Manipulação de estado no React
+- Estruturação de componentes
+- Lógica de fluxo de aplicação
+- Organização de interface para sistemas reais
+- Simulação de rotinas de suporte técnico
+
+## ▶️ Como executar o projeto
+
+```bash
+# Clonar o repositório
+git clone https://github.com/regesalves/sistema-de-chamados-react.git
+
+# Acessar a pasta
+cd sistema-de-chamados-react
+
+# Instalar dependências
+npm install
+
+# Rodar o projeto
+npm run dev
