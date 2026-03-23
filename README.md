@@ -97,6 +97,4 @@ http://localhost:5173/
 ## 👨‍💻 Autor
 
 Desenvolvido por Réges Alves  
-Profissional em transição para a área de tecnologia, com experiência em suporte técnico e desenvolvimento de aplicações.
-
 🔗 LinkedIn: https://linkedin.com/in/regesalves
