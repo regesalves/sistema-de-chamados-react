@@ -1,0 +1,238 @@
+/* ===== RESET / BASE ===== */
+* {
+    box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+
+    background: radial-gradient(circle at top, #1a1a1a, #0d0d0d);
+    color: #eee;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+    width: min(1600px, calc(100vw - 48px));
+    margin: 0 auto;
+    padding: 32px 24px;
+}
+
+/* ===== TOPO (logo à esquerda / título centralizado) ===== */
+.topo {
+    padding: 26px 32px;
+    border-radius: 18px;
+    background: linear-gradient(90deg, rgba(120, 0, 0, 0.6), rgba(0, 0, 0, 0));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.12);
+    margin-bottom: 26px;
+
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    /* esq | centro | dir */
+    align-items: center;
+}
+
+.logo {
+    height: 100px;
+    width: auto;
+    justify-self: start;
+}
+
+.tituloBox {
+    justify-self: center;
+    text-align: center;
+}
+
+.topo h1 {
+    margin: 0;
+    font-size: 30px;
+    line-height: 1.1;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* Se você estiver usando a frase/descrição em algum momento */
+.sub {
+    margin: 6px 0 0;
+    opacity: 0.75;
+}
+
+/* ===== GRID PRINCIPAL ===== */
+.grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.4fr;
+    /* form menor | listas maior */
+    gap: 24px;
+    align-items: start;
+}
+
+/* ===== CARD ===== */
+.card {
+    background: linear-gradient(180deg, #1a1a1a, #111);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 240px;
+}
+
+/* ===== CAMPOS ===== */
+input,
+textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+
+    background: #0e0e0e;
+    color: #fff;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+
+    resize: vertical;
+}
+
+textarea {
+    min-height: 120px;
+}
+
+/* ===== BOTÕES ===== */
+button {
+    border: none;
+    border-radius: 10px;
+    padding: 12px 18px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button[type="submit"] {
+    background: #ff0000;
+    color: #fff;
+    width: 160px;
+}
+
+.btnSec {
+    background: #333;
+    color: #fff;
+}
+
+.btnDanger {
+    background: #8b0000;
+    color: #fff;
+}
+
+/* ===== LISTAS ===== */
+h2 {
+    margin: 0 0 10px;
+}
+
+.vazio {
+    opacity: 0.6;
+}
+
+.lista {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Item do chamado (grid pra alinhar data e botões) */
+.lista li {
+    display: grid;
+    grid-template-columns: minmax(0, 480px) 190px auto;
+    /* info | data | botoes */
+    align-items: center;
+    gap: 16px;
+
+    padding: 14px;
+    border-radius: 12px;
+    background: #141414;
+    margin-bottom: 10px;
+}
+
+/* chamado resolvido */
+.lista li.ok {
+    opacity: 0.6;
+    text-decoration: line-through;
+}
+
+/* bloco info */
+.itemInfo {
+    min-width: 0;
+}
+
+.linhaContato {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    opacity: 0.85;
+    margin: 4px 0 6px;
+}
+
+.problema {
+    margin-top: 6px;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+/* texto menor (se ainda estiver usando em algum ponto) */
+.mini {
+    font-size: 13px;
+    opacity: 0.8;
+
+    /* trava texto grande */
+    overflow-wrap: anywhere;
+    word-break: break-word;
+
+    /* opcional: corta em 2 linhas com ... */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* data/hora alinhadas */
+.itemData {
+    text-align: right;
+    font-size: 12px;
+    opacity: 0.6;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+/* botoes */
+.acoes {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 900px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .lista li {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .itemData {
+        text-align: left;
+    }
+
+    .acoes {
+        justify-content: flex-start;
+    }
+}
