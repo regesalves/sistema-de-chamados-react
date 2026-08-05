@@ -1,42 +1,76 @@
 import { useEffect, useMemo, useState } from "react";
 import "./App.css";
-import logo from "./assets/logo.png";
 
 const STORAGE_KEY = "chamados_alvestech";
 
-/* ===================== LISTA ===================== */
+function formatarTelefone(valor) {
+    const digitos = valor.replace(/\D/g, "").slice(0, 11);
+
+    if (digitos.length === 0) return "";
+    if (digitos.length <= 2) return `(${digitos}`;
+    if (digitos.length <= 6) return `(${digitos.slice(0, 2)}) ${digitos.slice(2)}`;
+    if (digitos.length <= 10) {
+        return `(${digitos.slice(0, 2)}) ${digitos.slice(2, 6)}-${digitos.slice(6)}`;
+    }
+    return `(${digitos.slice(0, 2)}) ${digitos.slice(2, 7)}-${digitos.slice(7)}`;
+}
+
 function ListaChamados({ titulo, itens, vazio, resolvido, onToggle, onDelete }) {
     return (
-        <div className="card">
-            <h2>
-                {titulo} ({itens.length})
-            </h2>
+        <section className="panel listPanel">
+            <div className="panelHeader">
+                <h2>{titulo}</h2>
+                <span className="countBadge">{itens.length}</span>
+            </div>
 
             {itens.length === 0 ? (
                 <p className="vazio">{vazio}</p>
             ) : (
                 <ul className="lista">
                     {itens.map((c) => (
-                        <li key={c.id} className={resolvido ? "ok" : ""}>
-                            <div className="itemInfo">
-                                <strong>{c.cliente}</strong>
-
-                                <div className="linhaContato">
-                                    <span>📍 {c.endereco}</span>
-                                    <span>📞 {c.contato}</span>
+                        <li
+                            key={c.id}
+                            className={`ticket ${resolvido ? "resolved" : "pending"}`}
+                        >
+                            <div className="ticketTop">
+                                <div className="ticketTitleRow">
+                                    <strong className="ticketName">{c.cliente}</strong>
+                                    <span className={`statusPill ${resolvido ? "resolved" : "pending"}`}>
+                                        {resolvido ? "Resolvido" : "Pendente"}
+                                    </span>
                                 </div>
 
-                                <div className="problema">{c.problema}</div>
+                                <div className="ticketMeta">
+                                    <span>Aberto em</span>
+                                    <strong>
+                                        {new Date(c.criadoEm).toLocaleString("pt-BR")}
+                                    </strong>
+                                </div>
                             </div>
 
-                            <div className="itemData">
-                                {new Date(c.criadoEm).toLocaleString("pt-BR")}
+                            <div className="ticketContactRow">
+                                <span className="metaItem">
+                                    <span className="metaIcon">⌖</span>
+                                    <span>{c.endereco}</span>
+                                </span>
+
+                                <span className="metaDivider" />
+
+                                <span className="metaItem">
+                                    <span className="metaIcon">☎</span>
+                                    <span>{c.contato}</span>
+                                </span>
                             </div>
 
-                            <div className="acoes">
+                            <div className="descricaoCard">
+                                <span className="descricaoLabel">Descrição</span>
+                                <p className="descricaoTexto">{c.problema}</p>
+                            </div>
+
+                            <div className="acoes acoesDireita">
                                 <button
                                     type="button"
-                                    className="btnSec"
+                                    className="btnOutline btnSuccess"
                                     onClick={() => onToggle(c.id)}
                                 >
                                     {resolvido ? "Reabrir" : "Concluir"}
@@ -44,7 +78,7 @@ function ListaChamados({ titulo, itens, vazio, resolvido, onToggle, onDelete }) 
 
                                 <button
                                     type="button"
-                                    className="btnDanger"
+                                    className="btnOutline btnDanger"
                                     onClick={() => onDelete(c.id)}
                                 >
                                     Excluir
@@ -54,11 +88,10 @@ function ListaChamados({ titulo, itens, vazio, resolvido, onToggle, onDelete }) 
                     ))}
                 </ul>
             )}
-        </div>
+        </section>
     );
 }
 
-/* ===================== APP ===================== */
 export default function App() {
     const [cliente, setCliente] = useState("");
     const [endereco, setEndereco] = useState("");
@@ -68,7 +101,6 @@ export default function App() {
     const [chamados, setChamados] = useState([]);
     const [carregado, setCarregado] = useState(false);
 
-    /* ===== LER DO LOCALSTORAGE ===== */
     useEffect(() => {
         const dados = localStorage.getItem(STORAGE_KEY);
         if (dados) {
@@ -77,13 +109,11 @@ export default function App() {
         setCarregado(true);
     }, []);
 
-    /* ===== SALVAR NO LOCALSTORAGE ===== */
     useEffect(() => {
         if (!carregado) return;
         localStorage.setItem(STORAGE_KEY, JSON.stringify(chamados));
     }, [chamados, carregado]);
 
-    /* ===== SEPARAR LISTAS ===== */
     const { pendentes, resolvidos } = useMemo(() => {
         const pend = [];
         const res = [];
@@ -91,7 +121,6 @@ export default function App() {
         return { pendentes: pend, resolvidos: res };
     }, [chamados]);
 
-    /* ===== REGISTRAR ===== */
     function registrarChamado(e) {
         e.preventDefault();
 
@@ -100,8 +129,9 @@ export default function App() {
             !endereco.trim() ||
             !contato.trim() ||
             !problema.trim()
-        )
+        ) {
             return;
+        }
 
         const novo = {
             id: Date.now(),
@@ -114,7 +144,6 @@ export default function App() {
         };
 
         setChamados((prev) => [...prev, novo]);
-
         setCliente("");
         setEndereco("");
         setContato("");
@@ -123,9 +152,7 @@ export default function App() {
 
     function alternarResolvido(id) {
         setChamados((prev) =>
-            prev.map((c) =>
-                c.id === id ? { ...c, resolvido: !c.resolvido } : c
-            )
+            prev.map((c) => (c.id === id ? { ...c, resolvido: !c.resolvido } : c))
         );
     }
 
@@ -135,47 +162,57 @@ export default function App() {
 
     return (
         <div className="container">
-            {/* TOPO */}
             <header className="topo">
-                <img src={logo} alt="Alves Tech" className="logo" />
                 <div className="tituloBox">
-                    <h1>REGISTRO SIMPLES DE ATENDIMENTOS</h1>
+                    <h1>Sistema de Chamados</h1>
+                    <p>Cadastre e acompanhe seus chamados em um só lugar.</p>
                 </div>
-                <div />
             </header>
 
             <div className="grid">
-                {/* FORM */}
-                <form className="card" onSubmit={registrarChamado}>
+                <form className="panel formPanel" onSubmit={registrarChamado}>
+                    <div className="formHeading">
+                        <span className="formIcon">🗒</span>
+                        <div>
+                            <h2>Novo atendimento</h2>
+                            <p>Preencha os dados para registrar um chamado.</p>
+                        </div>
+                    </div>
+
+                    <label>Cliente</label>
                     <input
                         value={cliente}
                         onChange={(e) => setCliente(e.target.value)}
-                        placeholder="Cliente (ex: João - Notebook)"
+                        placeholder="Ex.: João - Notebook"
                     />
 
+                    <label>Endereço</label>
                     <input
                         value={endereco}
                         onChange={(e) => setEndereco(e.target.value)}
-                        placeholder="Endereço (ex: Rua A, 123 - Bairro)"
+                        placeholder="Ex.: Rua A, 123 - Bairro"
                     />
 
+                    <label>Contato</label>
                     <input
+                        type="tel"
                         value={contato}
-                        onChange={(e) => setContato(e.target.value)}
-                        placeholder="Contato (ex: 38 99999-0000)"
+                        onChange={(e) => setContato(formatarTelefone(e.target.value))}
+                        inputMode="numeric"
+                        placeholder="(38) 99999-0000"
                     />
 
+                    <label>Descrição</label>
                     <textarea
                         value={problema}
                         onChange={(e) => setProblema(e.target.value)}
-                        placeholder="Descreva o problema"
-                        rows={4}
+                        placeholder="Descreva o problema..."
+                        rows={6}
                     />
 
-                    <button type="submit">Registrar</button>
+                    <button type="submit">+ Registrar atendimento</button>
                 </form>
 
-                {/* LISTAS */}
                 <div className="colunaListas">
                     <ListaChamados
                         titulo="Chamados pendentes"

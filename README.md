@@ -1,38 +1,37 @@
-# Sistema de Chamados - Alves Tech
+# Sistema de Chamados
 
 ## 📸 Preview do sistema
 
 ![Preview do sistema](./src/assets/preview.png)
 
-Sistema simples de abertura e gerenciamento de chamados, desenvolvido em React para simular rotinas de atendimento e suporte técnico.
+Sistema web para abertura e gerenciamento de chamados, desenvolvido em React para simular rotinas de atendimento e suporte técnico.
 
 ---
 
 ## 🎓 Contexto do projeto
 
-Este projeto foi desenvolvido como trabalho final do curso de **Programação Frontend com React e JavaScript**, realizado pelo Instituto Federal de Santa Catarina (IFSC), com carga horária de 60 horas.
+Este projeto foi desenvolvido como trabalho final do curso **Programação Frontend com React e JavaScript**, realizado pelo Instituto Federal de Santa Catarina (IFSC), com carga horária de 60 horas.
 
-Durante o curso, foram abordados conceitos como:
+Durante o curso foram aplicados conceitos relacionados ao desenvolvimento de aplicações React, componentização, gerenciamento de estado, estruturação de interfaces e lógica de aplicações web.
 
-- Criação de aplicações com React
-- Manipulação de estado e componentes
-- Estruturação de interfaces
-- Lógica de aplicação
-- Boas práticas de desenvolvimento frontend
-
-O sistema foi desenvolvido com o objetivo de aplicar, na prática, os conhecimentos adquiridos ao longo da formação.
+O objetivo do projeto foi colocar esses conhecimentos em prática por meio de um sistema que simulasse um fluxo básico de atendimento e suporte técnico.
 
 ---
 
 ## 📌 Sobre o projeto
 
-Este sistema representa um fluxo básico de atendimento, permitindo:
+O sistema permite registrar, acompanhar e organizar chamados técnicos, simulando um fluxo simples de atendimento.
 
-- Registrar chamados
-- Acompanhar o status dos atendimentos
-- Gerenciar chamados pendentes e resolvidos
+Principais funcionalidades:
 
-A aplicação simula uma situação real da área de suporte técnico, onde é necessário organizar demandas e acompanhar o ciclo de atendimento.
+- Cadastro de novos chamados
+- Listagem de chamados pendentes
+- Marcar chamados como concluídos
+- Reabertura de chamados finalizados
+- Exclusão de chamados
+- Registro automático da data e hora do atendimento
+- Interface organizada e intuitiva
+- Persistência dos dados utilizando LocalStorage
 
 ---
 
@@ -41,33 +40,22 @@ A aplicação simula uma situação real da área de suporte técnico, onde é n
 - React
 - JavaScript
 - Vite
-- HTML
-- CSS
-
----
-
-## ⚙️ Funcionalidades
-
-- Cadastro de novos chamados
-- Listagem de chamados pendentes
-- Marcar chamado como concluído
-- Reabrir chamados finalizados
-- Exclusão de chamados
-- Exibição de data e hora do atendimento
-- Interface organizada e intuitiva
-- Persistência de dados com localStorage, mantendo os chamados mesmo após atualização da página
+- HTML5
+- CSS3
+- LocalStorage
 
 ---
 
 ## 🧠 Aprendizados
 
-Com este projeto, pratiquei:
+Durante o desenvolvimento deste projeto pratiquei:
 
-- Manipulação de estado no React
-- Estruturação de componentes
-- Lógica de fluxo de aplicação
-- Organização de interface para sistemas reais
-- Simulação de rotinas de suporte técnico
+- Desenvolvimento de aplicações com React
+- Componentização e reutilização de componentes
+- Manipulação de estado
+- Organização de interfaces
+- Estruturação de fluxos de atendimento
+- Persistência de dados utilizando LocalStorage
 
 ---
 
@@ -81,7 +69,10 @@ npm run dev
 ```
 
 A aplicação estará disponível em:
+
+```
 http://localhost:5173/
+```
 
 ---
 
@@ -96,5 +87,11 @@ http://localhost:5173/
 
 ## 👨‍💻 Autor
 
-Desenvolvido por Réges Alves  
-🔗 LinkedIn: https://linkedin.com/in/regesalves
+=======
+**Réges Alves**
+
+Profissional de Tecnologia da Informação com foco em suporte técnico, análise de sistemas e desenvolvimento de soluções.
+
+🔗 LinkedIn:
+https://linkedin.com/in/regesalves
+>>>>>>> 320a331 (Atualiza interface e documentação do projeto)
