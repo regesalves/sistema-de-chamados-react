@@ -1,74 +1,61 @@
-# 🎫 Sistema de Chamados
+# Gestão de Chamados | Alves Tech
 
-Sistema web para registro e acompanhamento de solicitações de suporte, desenvolvido como projeto acadêmico com React e JavaScript.
+Aplicação web para registrar, organizar e acompanhar atendimentos de suporte técnico. O projeto começou como trabalho acadêmico e evoluiu para demonstrar, no portfólio da Alves Tech, um fluxo de chamados mais completo.
 
-<p align="center">
-  <img src="./src/assets/preview.png" alt="Preview do Sistema de Chamados" width="800">
-</p>
+## Funcionalidades
 
----
+- Painel inicial com indicadores e chamados recentes.
+- Cadastro de chamados com cliente, endereço, contato, descrição e data do atendimento.
+- Consulta do histórico de atendimentos pelo contato informado.
+- Pesquisa e filtros de chamados por situação e período diário ou mensal.
+- Calendário com indicação dos dias e meses que têm atendimentos.
+- Detalhes, conclusão, reabertura e exclusão de chamados.
+- Cadastro e consulta de clientes, incluindo clientes identificados em chamados anteriores.
+- Relatórios com indicadores por período, volume semanal e situação atual.
+- Exportação de backup JSON e limpeza de chamados por intervalo de datas, com confirmação.
 
-## 📌 Sobre o projeto
+## Tecnologias
 
-O Sistema de Chamados foi desenvolvido como trabalho final do curso **Programação Frontend com React e JavaScript**, realizado pelo Instituto Federal de Santa Catarina (IFSC), com carga horária de 60 horas.
+- React
+- JavaScript
+- Vite
+- HTML e CSS
+- LocalStorage
 
-O projeto simula um fluxo básico de atendimento e permite registrar, acompanhar e organizar chamados técnicos.
+## Dados e armazenamento
 
-A proposta foi colocar em prática conhecimentos de desenvolvimento web a partir de uma situação relacionada ao atendimento e suporte técnico.
+Os chamados e clientes ficam armazenados no `LocalStorage` do navegador. O sistema não usa backend nem sincroniza dados entre dispositivos ou navegadores. Para guardar uma cópia, use a exportação de backup disponível em **Configurações**.
 
----
+Chamados antigos, criados antes do campo de data do atendimento, usam a data original do registro nos filtros e relatórios.
 
-## 🔄 Fluxo de atendimento
+## Como executar localmente
 
-O sistema permite acompanhar diferentes etapas de uma solicitação:
-
-**Cadastro → Atendimento → Conclusão → Reabertura**
-
-Entre as principais funcionalidades estão:
-
-- Cadastro de novos chamados
-- Listagem e acompanhamento de chamados
-- Conclusão de atendimentos
-- Reabertura de chamados finalizados
-- Exclusão de chamados
-- Registro de data e hora
-- Persistência dos dados com `localStorage`
-
----
-
-## 🧠 O que o projeto demonstra
-
-Além da aplicação dos conhecimentos técnicos do curso, o projeto permite observar:
-
-- organização de um fluxo de atendimento;
-- estruturação de informações;
-- gerenciamento de estados da aplicação;
-- organização de funcionalidades;
-- relação entre solicitação, atendimento e conclusão;
-- persistência de informações no navegador.
-
-O projeto também representa a aplicação prática da experiência em Suporte Técnico na organização de um fluxo básico de atendimento.
-
----
-
-## 🛠️ Tecnologias utilizadas
-
-<p align="center">
-  <img src="https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB" alt="React">
-  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black" alt="JavaScript">
-  <img src="https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white" alt="Vite">
-  <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white" alt="HTML5">
-  <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white" alt="CSS3">
-  <img src="https://img.shields.io/badge/localStorage-323330?style=flat&logo=googlechrome&logoColor=white" alt="localStorage">
-</p>
-
----
-
-## ▶️ Como executar
-
-É necessário ter o **Node.js** e o **Git** instalados.
-
-Clone o repositório:
+É necessário ter Node.js e Git instalados.
 
 ```bash
 git clone https://github.com/regesalves/sistema-de-chamados-react.git
+cd sistema-de-chamados-react
+npm install
+npm run dev
+```
+
+O Vite informará o endereço local da aplicação, normalmente `http://localhost:5173`.
+
+## Scripts disponíveis
+
+```bash
+npm run dev     # inicia o servidor de desenvolvimento
+npm run build   # gera a versão de produção em dist/
+npm run preview # visualiza localmente a versão de produção
+npm run lint    # executa o ESLint
+```
+
+## Origem do projeto
+
+O primeiro protótipo foi desenvolvido como trabalho final do curso **Programação Frontend com React e JavaScript**, do Instituto Federal de Santa Catarina (IFSC), com carga horária de 60 horas. A versão atual amplia o projeto acadêmico como uma demonstração de produto para o portfólio da Alves Tech.
+
+## Autor
+
+**Réges Alves**
+
+[LinkedIn](https://linkedin.com/in/regesalves)
