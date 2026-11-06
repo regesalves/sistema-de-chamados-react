@@ -75,7 +75,7 @@ function Status({ resolvido }) {
     return <span className={`statusPill ${resolvido ? "resolved" : "pending"}`}>{resolvido ? "Resolvido" : "Pendente"}</span>;
 }
 
-function TicketCard({ chamado, onToggle, onDelete, onNavigate }) {
+function TicketCard({ chamado, onToggle, onDelete, onRequestDelete, onCancelDelete, confirmandoExclusao, onNavigate }) {
     const dataAtendimento = dataReferenciaChamado(chamado);
     const dataAtendimentoKey = chamado.dataAtendimento || dataLocalInput(dataAtendimento);
     const dataCriacao = new Date(chamado.criadoEm);
@@ -84,7 +84,8 @@ function TicketCard({ chamado, onToggle, onDelete, onNavigate }) {
         <div className="ticketTop"><div className="ticketTitleRow"><strong className="ticketName">{chamado.cliente}</strong><Status resolvido={chamado.resolvido}/></div><div className="ticketMeta"><span>Atendimento em</span><strong><time dateTime={dataAtendimentoKey}>{dataAtendimento.toLocaleDateString("pt-BR")}</time></strong>{atendimentoHistorico && <small className="ticketCreatedAt">Registrado em <DataHora valor={chamado.criadoEm}/></small>}</div></div>
         <div className="ticketContactRow"><span className="metaItem"><Icon name="pin" size={15}/>{chamado.endereco}</span><span className="metaItem"><Icon name="phone" size={14}/>{chamado.contato}</span></div>
         <div className="descriptionCard"><span className="descriptionLabel">Descrição do problema</span><p>{chamado.problema}</p></div>
-        <div className="ticketActions"><button type="button" className="buttonTertiary" onClick={() => onNavigate(`/chamados/${chamado.id}`)}><Icon name="eye" size={15}/>Detalhes</button><button type="button" className="buttonSecondary" onClick={() => onToggle(chamado.id)}>{chamado.resolvido ? "Reabrir chamado" : "Concluir chamado"}</button><button type="button" className="buttonDanger" onClick={() => onDelete(chamado.id)}>Excluir</button></div>
+        <div className="ticketActions"><button type="button" className="buttonTertiary" onClick={() => onNavigate(`/chamados/${chamado.id}`)}><Icon name="eye" size={15}/>Detalhes</button><button type="button" className="buttonSecondary" onClick={() => onToggle(chamado.id)}>{chamado.resolvido ? "Reabrir chamado" : "Concluir chamado"}</button><button type="button" className="buttonDanger" onClick={() => onRequestDelete(chamado.id)}>Excluir</button></div>
+        {confirmandoExclusao && <div className="ticketDeleteConfirm" role="alert"><p>Deseja excluir o chamado de <strong>{chamado.cliente}</strong>? Esta ação não pode ser desfeita.</p><div><button type="button" className="buttonDanger" onClick={() => onDelete(chamado.id)}>Excluir chamado</button><button type="button" className="buttonTertiary" onClick={onCancelDelete}>Cancelar</button></div></div>}
     </article>;
 }
 
@@ -112,6 +113,7 @@ export default function App() {
     const [clientesCarregados, setClientesCarregados] = useState(false);
     const [caminho, setCaminho] = useState(INITIAL_PATH);
     const [confirmacaoId, setConfirmacaoId] = useState(null);
+    const [exclusaoPendenteId, setExclusaoPendenteId] = useState(null);
     const [busca, setBusca] = useState("");
     const [filtroStatus, setFiltroStatus] = useState("todos");
     const [filtroPeriodo, setFiltroPeriodo] = useState("todos");
@@ -126,6 +128,7 @@ export default function App() {
     const [contatoNovoCliente, setContatoNovoCliente] = useState("");
     const [clienteEditandoId, setClienteEditandoId] = useState(null);
     const [completandoCadastroCliente, setCompletandoCadastroCliente] = useState(false);
+    const [identidadeClienteHistorico, setIdentidadeClienteHistorico] = useState("");
     const [mensagemCliente, setMensagemCliente] = useState("");
     const [relatorioMes, setRelatorioMes] = useState(() => { const hoje = new Date(); return `${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, "0")}`; });
     const [relatorioDia, setRelatorioDia] = useState(null);
@@ -340,6 +343,7 @@ export default function App() {
     function alternarResolvido(id) { setChamados((atuais) => atuais.map((chamado) => chamado.id === id ? { ...chamado, resolvido: !chamado.resolvido } : chamado)); }
     function excluirChamado(id) {
         setChamados((atuais) => atuais.filter((chamado) => chamado.id !== id));
+        setExclusaoPendenteId(null);
         if (caminho === `/chamados/${id}`) navegar("/chamados");
     }
 
@@ -376,7 +380,7 @@ export default function App() {
 
     function limparFormularioCliente() {
         setNomeNovoCliente(""); setEnderecoNovoCliente(""); setContatoNovoCliente("");
-        setClienteEditandoId(null); setCompletandoCadastroCliente(false); setMensagemCliente("");
+        setClienteEditandoId(null); setCompletandoCadastroCliente(false); setIdentidadeClienteHistorico(""); setMensagemCliente("");
     }
 
     function salvarCliente(event) {
@@ -397,22 +401,33 @@ export default function App() {
             return;
         }
         if (clienteEditandoId) {
+            const clienteAnterior = clientes.find((clienteItem) => clienteItem.id === clienteEditandoId);
+            const identidadeAnterior = identidadeCliente(clienteAnterior?.nome, clienteAnterior?.contato);
             setClientes((atuais) => atuais.map((clienteItem) => clienteItem.id === clienteEditandoId
                 ? { ...clienteItem, nome, endereco, contato: telefone, atualizadoEm: new Date().toISOString() }
                 : clienteItem));
+            setChamados((atuais) => atuais.map((chamado) => (
+                String(chamado.clienteId) === String(clienteEditandoId)
+                || (identidadeAnterior && identidadeCliente(chamado.cliente, chamado.contato) === identidadeAnterior)
+            ) ? { ...chamado, clienteId: clienteEditandoId, cliente: nome, endereco, contato: telefone } : chamado));
             setMensagemCliente("Cadastro atualizado.");
         } else {
             const novoCliente = { id: `cliente-${Date.now()}`, nome, endereco, contato: telefone, criadoEm: new Date().toISOString() };
             setClientes((atuais) => [...atuais, novoCliente]);
+            if (completandoCadastroCliente && identidadeClienteHistorico) {
+                setChamados((atuais) => atuais.map((chamado) => (
+                    identidadeCliente(chamado.cliente, chamado.contato) === identidadeClienteHistorico
+                ) ? { ...chamado, clienteId: novoCliente.id, cliente: nome, endereco, contato: telefone } : chamado));
+            }
             setMensagemCliente("Cliente cadastrado.");
         }
-        setNomeNovoCliente(""); setEnderecoNovoCliente(""); setContatoNovoCliente(""); setClienteEditandoId(null); setCompletandoCadastroCliente(false);
+        setNomeNovoCliente(""); setEnderecoNovoCliente(""); setContatoNovoCliente(""); setClienteEditandoId(null); setCompletandoCadastroCliente(false); setIdentidadeClienteHistorico("");
     }
 
     function editarCliente(clienteItem) {
         setNomeNovoCliente(clienteItem.nome); setEnderecoNovoCliente(clienteItem.endereco);
         setContatoNovoCliente(clienteItem.contato); setClienteEditandoId(clienteItem.id);
-        setCompletandoCadastroCliente(false);
+        setCompletandoCadastroCliente(false); setIdentidadeClienteHistorico("");
         setMensagemCliente(""); window.scrollTo(0, 0);
     }
 
@@ -422,6 +437,7 @@ export default function App() {
         setContatoNovoCliente(clienteItem.contato);
         setClienteEditandoId(null);
         setCompletandoCadastroCliente(true);
+        setIdentidadeClienteHistorico(identidadeCliente(clienteItem.nome, clienteItem.contato));
         setMensagemCliente("");
         window.scrollTo(0, 0);
         document.getElementById("novo-cliente-nome")?.focus({ preventScroll: true });
@@ -512,7 +528,7 @@ export default function App() {
                         ? <EmptyState className="managementEmpty" title="Sua fila de chamados começa aqui" description="Registre a primeira solicitação para organizar os dados do cliente, acompanhar o status e consultar o histórico do atendimento."/>
                         : chamadosFiltrados.length === 0
                             ? <EmptyState title="Nenhum resultado encontrado" description="Altere a pesquisa ou os filtros para ver outros chamados." action={<button className="buttonTertiary resetFilters" type="button" onClick={() => { setBusca(""); setFiltroStatus("todos"); setFiltroPeriodo("todos"); setFiltroReferencia(dataLocalInput().slice(0, 7)); setFiltroDia(new Date().getDate()); setFiltroCalendarioAberto(false); }}>Limpar filtros</button>}/>
-                            : <div className="managementList">{chamadosFiltrados.map((chamado) => <TicketCard key={chamado.id} chamado={chamado} onToggle={alternarResolvido} onDelete={excluirChamado} onNavigate={navegar}/>)}</div>}
+                            : <div className="managementList">{chamadosFiltrados.map((chamado) => <TicketCard key={chamado.id} chamado={chamado} onToggle={alternarResolvido} onDelete={excluirChamado} onRequestDelete={setExclusaoPendenteId} onCancelDelete={() => setExclusaoPendenteId(null)} confirmandoExclusao={String(exclusaoPendenteId) === String(chamado.id)} onNavigate={navegar}/>)}</div>}
                 </section>
             </>}
 
@@ -630,7 +646,7 @@ export default function App() {
             {caminho.startsWith("/chamados/") && caminho !== "/chamados/novo" && <>
                 <header className="pageHeader pageHeaderStack"><a className="backLink" {...linkProps("/chamados")}><Icon name="back" size={17}/>Voltar aos chamados</a><div className="pageHeaderText"><span className="pageEyebrow">DETALHES DO ATENDIMENTO</span><h1>Chamado</h1><p>Consulte as informações e atualize a situação do atendimento.</p></div></header>
                 {confirmacaoId && String(confirmacaoId) === caminho.slice("/chamados/".length) && <div className="successMessage" role="status">Chamado registrado com sucesso.</div>}
-                {chamadoDetalhe ? <TicketCard chamado={chamadoDetalhe} onToggle={alternarResolvido} onDelete={excluirChamado} onNavigate={navegar}/> : <EmptyState title="Chamado não encontrado" description="O registro pode ter sido removido ou o endereço está incorreto." action={<a className="buttonTertiary resetFilters" {...linkProps("/chamados")}>Ver chamados</a>}/>}
+                {chamadoDetalhe ? <TicketCard chamado={chamadoDetalhe} onToggle={alternarResolvido} onDelete={excluirChamado} onRequestDelete={setExclusaoPendenteId} onCancelDelete={() => setExclusaoPendenteId(null)} confirmandoExclusao={String(exclusaoPendenteId) === String(chamadoDetalhe.id)} onNavigate={navegar}/> : <EmptyState title="Chamado não encontrado" description="O registro pode ter sido removido ou o endereço está incorreto." action={<a className="buttonTertiary resetFilters" {...linkProps("/chamados")}>Ver chamados</a>}/>}
             </>}
 
             {!(["/", "/chamados", "/chamados/novo", "/clientes", "/relatorios", "/configuracoes"].includes(caminho) || caminho.startsWith("/chamados/")) && <>
