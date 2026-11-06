@@ -14,6 +14,22 @@ Aplicação web para registrar, organizar e acompanhar atendimentos de suporte t
 - Relatórios com indicadores por período, volume semanal e situação atual.
 - Exportação de backup JSON e limpeza de chamados por intervalo de datas, com confirmação.
 
+## Capturas do sistema
+
+As telas abaixo mostram as principais áreas da aplicação com dados de demonstração.
+
+| Início | Chamados |
+| --- | --- |
+| ![Painel inicial com indicadores e chamados recentes](docs/screenshots/inicio.png) | ![Listagem e filtros de chamados](docs/screenshots/chamados.png) |
+
+| Clientes | Relatórios |
+| --- | --- |
+| ![Cadastro e lista de clientes](docs/screenshots/clientes.png) | ![Relatórios com filtros por período](docs/screenshots/relatorios.png) |
+
+| Configurações | Novo chamado |
+| --- | --- |
+| ![Backup e limpeza por período](docs/screenshots/configuracoes.png) | ![Formulário de registro de chamado e histórico do contato](docs/screenshots/novo-chamado.png) |
+
 ## Tecnologias
 
 - React
